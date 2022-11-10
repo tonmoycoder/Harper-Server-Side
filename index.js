@@ -20,15 +20,29 @@ const uri = `mongodb+srv://${process.env.DB_User}:${process.env.DB_Password}@clu
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-client.connect(err => {
-  const productCollections = client.db("User_main").collection("ProductsDetails");
-  // perform actions on the collection object
-  console.log('mongodb connected');
-  client.close();
-});
+async function run(){
+    try{
+        const productCollections = client
+      .db("User_main")
+      .collection("ProductsDetails");
+    const commentCollection = client.db("User_main").collection("userComment");
+    // get all products api
+    app.get("/products", async (req, res) => {
+      const query = {};
+      const sort = { time: -1 };
+      const curser = productCollections.find(query).sort(sort);
+      const result = await curser.toArray();
+      res.send(result);
+    });
+    }
+    finally{
 
+    }
+}
 
-
+run().catch(error => {
+    console.log(error);
+})
 
 // Api test
 app.get('/', (req,res) => {
