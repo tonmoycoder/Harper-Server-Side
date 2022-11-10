@@ -50,6 +50,16 @@ async function run() {
       const user = await productCollections.findOne(query);
       res.send(user);
     });
+
+    // post api start
+
+    //post user review
+    app.post("/comment", async (req, res) => {
+        const commentData = await req.body;
+        console.log(commentData);
+        const result = await productCollections.insertOne(commentData);
+        res.send(result);
+      });
   } finally {
   }
 }
