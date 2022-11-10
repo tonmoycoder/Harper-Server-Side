@@ -53,13 +53,19 @@ async function run() {
 
     // post api start
 
-    //post user review
-    app.post("/comment", async (req, res) => {
-        const commentData = await req.body;
-        console.log(commentData);
-        const result = await productCollections.insertOne(commentData);
-        res.send(result);
-      });
+    //post product user review
+    app.post('/comment', async (req, res) => {
+      const commentData = await req.body;
+      const result = await productCollections.insertOne(commentData);
+      res.send(result);
+    });
+
+    // post user individual comment api
+    app.post('/comments', async (req, res) => {
+      const productData = await req.body;
+      const result = await commentCollection.insertOne(productData);
+      res.send(result);
+    });
   } finally {
   }
 }
