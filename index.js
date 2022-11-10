@@ -51,6 +51,16 @@ async function run() {
       res.send(user);
     });
 
+    // get user comments by product id
+    app.get('/comment/:id', async (req, res) => {
+      const productID = req.params.id;
+      const query = { productID: productID };
+      const sort = { time: -1 };
+      const curser = commentCollection.find(query).sort(sort);
+      const result = await curser.toArray();
+      res.send(result);
+    });
+
     // post api start
 
     //post product user review
@@ -73,7 +83,6 @@ async function run() {
       const result = await productCollections.insertOne(productData);
       res.send(result);
     });
-    
   } finally {
   }
 }
