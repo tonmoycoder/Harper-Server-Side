@@ -93,6 +93,13 @@ async function run() {
       const result = await productCollections.insertOne(productData);
       res.send(result);
     });
+
+    app.delete('/userComment/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await commentCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
   }
 }
