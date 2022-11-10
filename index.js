@@ -66,6 +66,14 @@ async function run() {
       const result = await commentCollection.insertOne(productData);
       res.send(result);
     });
+
+    // post products or service
+    app.post('/products', async (req, res) => {
+      const productData = await req.body;
+      const result = await productCollections.insertOne(productData);
+      res.send(result);
+    });
+    
   } finally {
   }
 }
