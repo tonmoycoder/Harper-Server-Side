@@ -61,6 +61,16 @@ async function run() {
       res.send(result);
     });
 
+    // get user comments by user email
+    app.get('/userComment/:email', async (req, res) => {
+      const UserEmail = req.params.email;
+      const query = { email: UserEmail };
+      const sort = { time: -1 };
+      const curser = commentCollection.find(query).sort(sort);
+      const result = await curser.toArray();
+      res.send(result);
+    });
+
     // post api start
 
     //post product user review
